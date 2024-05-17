@@ -1,0 +1,32 @@
+[0.667s] Invoking command in '/home/p-awr/Repos/pc_classifier/src/pc_c': PYTHONPATH=/home/p-awr/Repos/pc_classifier/build/pc_c/prefix_override:/home/p-awr/Repos/pc_classifier/install/pc_c/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/pc_c build --build-base /home/p-awr/Repos/pc_classifier/build/pc_c/build install --record /home/p-awr/Repos/pc_classifier/build/pc_c/install.log --single-version-externally-managed install_data
+[0.888s] running egg_info
+[0.903s] writing ../../build/pc_c/pc_c.egg-info/PKG-INFO
+[0.904s] writing dependency_links to ../../build/pc_c/pc_c.egg-info/dependency_links.txt
+[0.904s] writing entry points to ../../build/pc_c/pc_c.egg-info/entry_points.txt
+[0.904s] writing requirements to ../../build/pc_c/pc_c.egg-info/requires.txt
+[0.904s] writing top-level names to ../../build/pc_c/pc_c.egg-info/top_level.txt
+[0.935s] reading manifest file '../../build/pc_c/pc_c.egg-info/SOURCES.txt'
+[0.935s] adding license file 'LICENSE'
+[0.936s] writing manifest file '../../build/pc_c/pc_c.egg-info/SOURCES.txt'
+[0.936s] running build
+[0.936s] running build_py
+[0.936s] copying pc_c/LidarReaderNode.py -> /home/p-awr/Repos/pc_classifier/build/pc_c/build/lib/pc_c
+[0.936s] copying pc_c/__init__.py -> /home/p-awr/Repos/pc_classifier/build/pc_c/build/lib/pc_c
+[0.936s] copying pc_c/DisplayNode.py -> /home/p-awr/Repos/pc_classifier/build/pc_c/build/lib/pc_c
+[0.936s] copying pc_c/ClassifierNode.py -> /home/p-awr/Repos/pc_classifier/build/pc_c/build/lib/pc_c
+[0.937s] running install
+[0.941s] running install_lib
+[0.957s] copying /home/p-awr/Repos/pc_classifier/build/pc_c/build/lib/pc_c/ClassifierNode.py -> /home/p-awr/Repos/pc_classifier/install/pc_c/lib/python3.10/site-packages/pc_c
+[0.957s] byte-compiling /home/p-awr/Repos/pc_classifier/install/pc_c/lib/python3.10/site-packages/pc_c/ClassifierNode.py to ClassifierNode.cpython-310.pyc
+[0.958s] running install_data
+[0.958s] copying resource/pc_c -> /home/p-awr/Repos/pc_classifier/install/pc_c/share/ament_index/resource_index/packages
+[0.958s] copying package.xml -> /home/p-awr/Repos/pc_classifier/install/pc_c/share/pc_c
+[0.958s] running install_egg_info
+[0.975s] removing '/home/p-awr/Repos/pc_classifier/install/pc_c/lib/python3.10/site-packages/pc_c-0.0.0-py3.10.egg-info' (and everything under it)
+[0.975s] Copying ../../build/pc_c/pc_c.egg-info to /home/p-awr/Repos/pc_classifier/install/pc_c/lib/python3.10/site-packages/pc_c-0.0.0-py3.10.egg-info
+[0.975s] running install_scripts
+[1.104s] Installing classifier script to /home/p-awr/Repos/pc_classifier/install/pc_c/lib/pc_c
+[1.104s] Installing display script to /home/p-awr/Repos/pc_classifier/install/pc_c/lib/pc_c
+[1.104s] Installing lidar script to /home/p-awr/Repos/pc_classifier/install/pc_c/lib/pc_c
+[1.104s] writing list of installed files to '/home/p-awr/Repos/pc_classifier/build/pc_c/install.log'
+[1.125s] Invoked command in '/home/p-awr/Repos/pc_classifier/src/pc_c' returned '0': PYTHONPATH=/home/p-awr/Repos/pc_classifier/build/pc_c/prefix_override:/home/p-awr/Repos/pc_classifier/install/pc_c/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/pc_c build --build-base /home/p-awr/Repos/pc_classifier/build/pc_c/build install --record /home/p-awr/Repos/pc_classifier/build/pc_c/install.log --single-version-externally-managed install_data

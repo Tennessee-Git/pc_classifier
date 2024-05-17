@@ -1,0 +1,28 @@
+running egg_info
+writing ../../build/pc_c/pc_c.egg-info/PKG-INFO
+writing dependency_links to ../../build/pc_c/pc_c.egg-info/dependency_links.txt
+writing entry points to ../../build/pc_c/pc_c.egg-info/entry_points.txt
+writing requirements to ../../build/pc_c/pc_c.egg-info/requires.txt
+writing top-level names to ../../build/pc_c/pc_c.egg-info/top_level.txt
+reading manifest file '../../build/pc_c/pc_c.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file '../../build/pc_c/pc_c.egg-info/SOURCES.txt'
+running build
+running build_py
+copying pc_c/LidarReaderNode.py -> /home/p-awr/Repos/pc_classifier/build/pc_c/build/lib/pc_c
+copying pc_c/__init__.py -> /home/p-awr/Repos/pc_classifier/build/pc_c/build/lib/pc_c
+copying pc_c/DisplayNode.py -> /home/p-awr/Repos/pc_classifier/build/pc_c/build/lib/pc_c
+copying pc_c/ClassifierNode.py -> /home/p-awr/Repos/pc_classifier/build/pc_c/build/lib/pc_c
+running install
+running install_lib
+running install_data
+copying resource/pc_c -> /home/p-awr/Repos/pc_classifier/install/pc_c/share/ament_index/resource_index/packages
+copying package.xml -> /home/p-awr/Repos/pc_classifier/install/pc_c/share/pc_c
+running install_egg_info
+removing '/home/p-awr/Repos/pc_classifier/install/pc_c/lib/python3.10/site-packages/pc_c-0.0.0-py3.10.egg-info' (and everything under it)
+Copying ../../build/pc_c/pc_c.egg-info to /home/p-awr/Repos/pc_classifier/install/pc_c/lib/python3.10/site-packages/pc_c-0.0.0-py3.10.egg-info
+running install_scripts
+Installing classifier script to /home/p-awr/Repos/pc_classifier/install/pc_c/lib/pc_c
+Installing display script to /home/p-awr/Repos/pc_classifier/install/pc_c/lib/pc_c
+Installing lidar script to /home/p-awr/Repos/pc_classifier/install/pc_c/lib/pc_c
+writing list of installed files to '/home/p-awr/Repos/pc_classifier/build/pc_c/install.log'

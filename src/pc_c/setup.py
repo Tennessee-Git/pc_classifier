@@ -20,7 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            ''
+            'display = pc_c.DisplayNode:main',
+            'classifier = pc_c.ClassifierNode:main',
+            'lidar = pc_c.LidarReaderNode:main'
         ],
     },
 )
