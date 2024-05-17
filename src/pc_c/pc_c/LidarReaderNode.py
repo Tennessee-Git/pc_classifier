@@ -23,8 +23,7 @@ class LidarReaderNode(Node):
             10
         )
         self.br = CvBridge()
-        self.publisher_ = self.create_publisher(Image, LIDAR_OUTPUT_TOPIC, 10)
-        # self.timer = self.create_timer(TIMER_PERIOD, self.lidar_publish_callback)
+        self.publisher_ = self.create_publisher(any, LIDAR_OUTPUT_TOPIC, 10) # TODO: napisac custom type
 
 
     def lidar_callback(self, msg):
@@ -47,7 +46,7 @@ class LidarReaderNode(Node):
             rgb = np.append(rgb, [[r, g, b]], axis=0)
 
         self.get_logger().info(f'{msg.height, msg.width, xyz.shape}')
-        self.convert_to_image(rgb.reshape((msg.width, msg.height)))
+        self.convert_to_image(rgb.reshape((16, -1, 3)))
 
 
     def convert_to_image(self, rgb): #testowe
