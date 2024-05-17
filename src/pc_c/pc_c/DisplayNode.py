@@ -18,9 +18,9 @@ class DisplayNode(Node):
         )
         self.br = CvBridge()
 
-    def image_callback(self, data):
+    def image_callback(self, msg):
         self.get_logger().info("Image received.")
-        frame = self.br.imgmsg_to_cv2(data)
+        frame = self.br.imgmsg_to_cv2(msg)
         cv2.imshow("Classifed image", frame)
         cv2.waitKey(1)
 
