@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: pc_c
+Version: 0.0.0
+Summary: TODO: Package description
+Maintainer: p-awr
+Maintainer-email: p-awr@gmail.com
+License: Apache-2.0
+Requires-Dist: setuptools
