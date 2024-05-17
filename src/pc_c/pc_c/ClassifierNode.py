@@ -36,6 +36,7 @@ class Classifier(Node):
                 self.br.cv2_to_imgmsg(frame, 'bgr8')
             )
             self.get_logger().info("Publishing frame")
+            self.get_logger().info("\n")
 
 
 
