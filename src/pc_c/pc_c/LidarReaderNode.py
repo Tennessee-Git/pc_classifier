@@ -23,11 +23,8 @@ class LidarReaderNode(Node):
             self.lidar_callback,
             10
         )
-        # self.lidar_height = 16
-        # self.lidar_width = 1824
         self.br = CvBridge()
         self.publisher_ = self.create_publisher(LidarData, LIDAR_OUTPUT_TOPIC, 10) # TODO: napisac custom type
-
 
     def lidar_callback(self, msg):
         rgb = []
@@ -49,32 +46,44 @@ class LidarReaderNode(Node):
             rgb.append([r, g, b])
 
         self.publish_data(np.array(xyz), np.array(rgb))
-        # self.convert_to_image(rgb)
 
-    def convert_to_XyzPoint(self, xyz):
-        xyz = np.nan_to_num(xyz)
-        xyz_points = []
-        for i in xyz:
-            coords = XyzPoint()
-            coords.xp = i
-            xyz_points.append(coords)
-        return xyz_points
+    # def convert_to_XyzPoint(self, xyz):
+    #     xyz = np.nan_to_num(xyz)
+    #     xyz_points = []
+    #     for i in xyz:
+    #         coords = XyzPoint()
+    #         coords.xp = i
+    #         xyz_points.append(coords)
+    #     return xyz_points
 
-    def convert_to_RgbPoint(self, rgb):
-        rgb = np.nan_to_num(rgb)
-        rgb = rgb.astype(np.uint8)
-        rgb_points = []
-        for i in rgb:
-            rgb_point = RgbPoint()
-            rgb_point.rp = i
-            rgb_points.append(rgb_point)
+    # def convert_to_RgbPoint(self, rgb):
+    #     rgb = np.nan_to_num(rgb)
+    #     rgb = rgb.astype(np.uint8)
+    #     rgb_points = []
+    #     for i in rgb:
+    #         rgb_point = RgbPoint()
+    #         rgb_point.rp = i
+    #         rgb_points.append(rgb_point)
+    #     return rgb_points
 
-        return rgb_points
+    def convert_to_type(self, arr, T, is_rgb=False):
+        arr = np.nan_to_num(arr)
+        output = []
+        if is_rgb:
+            arr = arr.astype(np.uint8)
+        for i in arr:
+            el = T()
+            el.p = i
+            output.append(el)
+        return output
 
     def publish_data(self, xyz, rgb):
         msg = LidarData()
-        msg.points = self.convert_to_XyzPoint(xyz)
-        msg.rgb_points = self.convert_to_RgbPoint(rgb)
+        # msg.points = self.convert_to_XyzPoint(xyz)
+        # msg.rgb_points = self.convert_to_RgbPoint(rgb)
+
+        msg.points = self.convert_to_type(xyz, XyzPoint)
+        msg.rgb_points = self.convert_to_type(rgb, RgbPoint, True)
 
         self.publisher_.publish(msg)
         self.get_logger().info("PUBLISHING converted point clouds")

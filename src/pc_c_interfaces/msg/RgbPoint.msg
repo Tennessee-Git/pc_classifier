@@ -1,1 +1,1 @@
-uint8[3] rp
+uint8[3] p
