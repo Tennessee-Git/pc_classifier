@@ -1,9 +1,0 @@
-Metadata-Version: 2.1
-Name: pc_c
-Version: 0.0.0
-Summary: Point cloud classifier
-Maintainer: p-awr
-Maintainer-email: p-awr@gmail.com
-License: Apache-2.0
-License-File: LICENSE
-Requires-Dist: setuptools

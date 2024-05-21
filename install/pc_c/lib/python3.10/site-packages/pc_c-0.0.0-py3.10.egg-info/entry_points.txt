@@ -1,4 +1,0 @@
-[console_scripts]
-classifier = pc_c.ClassifierNode:main
-display = pc_c.DisplayNode:main
-lidar = pc_c.LidarReaderNode:main
