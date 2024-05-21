@@ -1,9 +1,10 @@
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
-from std_msgs.msg import String
+from pc_c_interfaces.msg import LidarData, XyzPoint, RgbPoint
 import cv2
 from cv_bridge import CvBridge
+import numpy as np
 
 LIDAR_INPUT_TOPIC = "/lidar/points"
 CLASSIFIED_IMAGE = '/images'
@@ -13,23 +14,23 @@ class ClassifierNode(Node):
     def __init__(self):
         super().__init__('classifier')
         self.subscription = self.create_subscription(
-            Image, # do zmiany
+            LidarData,
             LIDAR_INPUT_TOPIC,
             self.classify_callback,
             10
         )
-        self.cap = cv2.VideoCapture(0)
         self.br = CvBridge()
+        self.lidar_height = 16
+        self.lidar_width = 1824
 
         self.publisher_ = self.create_publisher(Image, CLASSIFIED_IMAGE, 10)
-        self.timer = self.create_timer(TIMER_PERIOD, self.lidar_publish_callback) # pewnie do wyjebania
 
     def classify_callback(self, msg):
         self.get_logger().info('CLASSIFIER RECEIVED MESSAGE')
         # klasyfikacja -> przeslanie dalej
-        frame = self.br.imgmsg_to_cv2(msg)
-        cv2.imshow("Unclassified image", frame)
-        cv2.waitKey(1)
+        xyz = np.array(msg.points)
+        rgb = np.array(msg.rgb_points)
+        print(xyz.shape,"\n",xyz[:2],'\n','\n', rgb.shape,rgb[:2],"\n")
 
     def lidar_publish_callback(self):
         ret, frame = self.cap.read()
@@ -38,7 +39,7 @@ class ClassifierNode(Node):
             self.publisher_.publish(
                 self.br.cv2_to_imgmsg(frame, 'bgr8')
             )
-            self.get_logger().info("Publishing frame")
+            # self.get_logger().info("Publishing frame")
 
 
 

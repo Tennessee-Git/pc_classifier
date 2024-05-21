@@ -1,12 +1,13 @@
 import ctypes
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import PointCloud2, Image
+from sensor_msgs.msg import PointCloud2
+from pc_c_interfaces.msg import LidarData, XyzPoint, RgbPoint
 from sensor_msgs_py import point_cloud2 as pc2
 import numpy as np
 import struct
-from PIL import Image as PImage
 from cv_bridge import CvBridge
+import cv2
 
 # LIDAR_TOPIC = "/ouster/points"
 LIDAR_TOPIC = "/velodyne_points"
@@ -22,13 +23,15 @@ class LidarReaderNode(Node):
             self.lidar_callback,
             10
         )
+        # self.lidar_height = 16
+        # self.lidar_width = 1824
         self.br = CvBridge()
-        self.publisher_ = self.create_publisher(any, LIDAR_OUTPUT_TOPIC, 10) # TODO: napisac custom type
+        self.publisher_ = self.create_publisher(LidarData, LIDAR_OUTPUT_TOPIC, 10) # TODO: napisac custom type
 
 
     def lidar_callback(self, msg):
-        xyz = np.array([[0,0,0]])
-        rgb = np.array([[0,0,0]])
+        rgb = []
+        xyz = []
         gen = pc2.read_points(msg)
         int_data = list(gen)
 
@@ -42,24 +45,38 @@ class LidarReaderNode(Node):
             g = (pack & 0x0000FF00)>>8
             b = (pack & 0x000000FF)
 
-            xyz = np.append(xyz, [[x[0], x[1], x[2]]], axis=0)
-            rgb = np.append(rgb, [[r, g, b]], axis=0)
+            xyz.append([x[0], x[1], x[2]])
+            rgb.append([r, g, b])
 
-        self.get_logger().info(f'{msg.height, msg.width, xyz.shape}')
-        self.convert_to_image(rgb.reshape((16, -1, 3)))
+        self.publish_data(np.array(xyz), np.array(rgb))
+        # self.convert_to_image(rgb)
 
+    def convert_to_XyzPoint(self, xyz):
+        xyz = np.nan_to_num(xyz)
+        xyz_points = []
+        for i in xyz:
+            coords = XyzPoint()
+            coords.xp = i
+            xyz_points.append(coords)
+        return xyz_points
 
-    def convert_to_image(self, rgb): #testowe
-        print(rgb.shape)
+    def convert_to_RgbPoint(self, rgb):
+        rgb = np.nan_to_num(rgb)
+        rgb = rgb.astype(np.uint8)
+        rgb_points = []
+        for i in rgb:
+            rgb_point = RgbPoint()
+            rgb_point.rp = i
+            rgb_points.append(rgb_point)
 
-        # img = PImage.fromarray(np.reshape(rgb, (height, width)))
-        # self.publisher_.publish(
-        #     self.br.cv2_to_imgmsg(img)
-        # )
+        return rgb_points
 
+    def publish_data(self, xyz, rgb):
+        msg = LidarData()
+        msg.points = self.convert_to_XyzPoint(xyz)
+        msg.rgb_points = self.convert_to_RgbPoint(rgb)
 
-
-    def lidar_publish_callback(self):
+        self.publisher_.publish(msg)
         self.get_logger().info("PUBLISHING converted point clouds")
 
 def main(args=None):
