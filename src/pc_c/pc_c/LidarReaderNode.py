@@ -66,14 +66,15 @@ class LidarReaderNode(Node):
     #         rgb_points.append(rgb_point)
     #     return rgb_points
 
-    def convert_to_type(self, arr, T, is_rgb=False):
+    def convert_to_type(self, arr, T,p, is_rgb=False):
         arr = np.nan_to_num(arr)
         output = []
         if is_rgb:
             arr = arr.astype(np.uint8)
         for i in arr:
             el = T()
-            el.p = i
+            # el.p = i
+            setattr(el, p, i)
             output.append(el)
         return output
 
@@ -82,11 +83,11 @@ class LidarReaderNode(Node):
         # msg.points = self.convert_to_XyzPoint(xyz)
         # msg.rgb_points = self.convert_to_RgbPoint(rgb)
 
-        msg.points = self.convert_to_type(xyz, XyzPoint)
-        msg.rgb_points = self.convert_to_type(rgb, RgbPoint, True)
+        msg.points = self.convert_to_type(xyz, XyzPoint, "p")
+        msg.rgb_points = self.convert_to_type(rgb, RgbPoint, "p", True)
 
         self.publisher_.publish(msg)
-        self.get_logger().info("PUBLISHING converted point clouds")
+        self.get_logger().info(f"PUBLISHING xyz:{len(xyz)} rgb:{len(rgb)}")
 
 def main(args=None):
     rclpy.init(args=args)

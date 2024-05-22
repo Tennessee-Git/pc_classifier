@@ -1,8 +1,10 @@
+import time
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
-from pc_c_interfaces.msg import LidarData, XyzPoint, RgbPoint
+from pc_c_interfaces.msg import LidarData
 import cv2
+import open3d as o3d
 from cv_bridge import CvBridge
 import numpy as np
 
@@ -26,22 +28,33 @@ class ClassifierNode(Node):
         self.publisher_ = self.create_publisher(Image, CLASSIFIED_IMAGE, 10)
 
     def classify_callback(self, msg):
-        self.get_logger().info('CLASSIFIER RECEIVED MESSAGE')
-        # klasyfikacja -> przeslanie dalej
-        xyz = np.array(msg.points)
-        rgb = np.array(msg.rgb_points)
-        print(xyz.shape,"\n",xyz[:2],'\n','\n', rgb.shape,rgb[:2],"\n")
+        xyz = self.convert_to_array(msg.points)
+        rgb = self.convert_to_array(msg.rgb_points, True)
+        self.get_logger().info(f'RECEIVED {xyz.shape, rgb.shape}')
+        # self.visualize_lidar(xyz)
 
-    def lidar_publish_callback(self):
-        ret, frame = self.cap.read()
+    def convert_to_array(self, arr, reshape=False):
+        output = []
+        arr = np.array(arr)
+        for i in arr:
+            output.append(i.p)
 
-        if ret == True:
-            self.publisher_.publish(
-                self.br.cv2_to_imgmsg(frame, 'bgr8')
-            )
-            # self.get_logger().info("Publishing frame")
+        extra_len = (self.lidar_height * self.lidar_width) - len(output)
+        for j in range(extra_len):
+            output.append([0,0,0])
 
+        if reshape:
+            return np.array(output).reshape(self.lidar_height, self.lidar_width, 3)
+        else:
+            return np.array(output)
 
+    def visualize_lidar(self, arr):
+        print("VISUALIZING")
+        pcd = o3d.geometry.PointCloud()
+        pcd.points = o3d.utility.Vector3dVector(arr)
+        pcd_center = pcd.get_center()
+        pcd.translate(-pcd_center)
+        o3d.visualization.draw_geometries([pcd])
 
 
 def main(args=None):
