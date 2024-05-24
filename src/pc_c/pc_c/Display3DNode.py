@@ -8,7 +8,7 @@ from pc_c.Constants import LIDAR_DATA_TOPIC
 
 class Display3DNode(Node):
     def __init__(self):
-        super().__init__("display")
+        super().__init__("display3d")
         self.subscription = self.create_subscription(
             LidarData,
             LIDAR_DATA_TOPIC,
@@ -20,9 +20,12 @@ class Display3DNode(Node):
         pcd.points = o3d.utility.Vector3dVector(np.random.rand(1000,3))
 
         vis = o3d.visualization.Visualizer()
-        vis.create_window(window_name="Lidar", width=1280, height=720)
+        vis.create_window(window_name="Display3D", width=1280, height=720)
         vis.add_geometry(pcd)
         ctr = vis.get_view_control()
+        rop = vis.get_render_option()
+        rop.light_on = False
+        rop.point_size = 3.0
 
         self.pcd = pcd
         self.vis = vis
