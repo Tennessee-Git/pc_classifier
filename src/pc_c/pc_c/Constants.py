@@ -1,0 +1,6 @@
+LIDAR_HEIGHT = 16
+LIDAR_WIDTH = 1824
+
+LIDAR_TOPIC = "/velodyne_points"
+LIDAR_DATA_TOPIC = "/lidar/points"
+CLASSIFIED_IMAGE_TOPIC = '/images'

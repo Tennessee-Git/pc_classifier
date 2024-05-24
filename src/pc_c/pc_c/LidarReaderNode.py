@@ -6,13 +6,7 @@ from pc_c_interfaces.msg import LidarData, XyzPoint, RgbPoint
 from sensor_msgs_py import point_cloud2 as pc2
 import numpy as np
 import struct
-from cv_bridge import CvBridge
-import cv2
-
-# LIDAR_TOPIC = "/ouster/points"
-LIDAR_TOPIC = "/velodyne_points"
-LIDAR_OUTPUT_TOPIC = "/lidar/points"
-TIMER_PERIOD = 0.1
+from pc_c.Constants import LIDAR_TOPIC,LIDAR_DATA_TOPIC
 
 class LidarReaderNode(Node):
     def __init__(self):
@@ -23,8 +17,7 @@ class LidarReaderNode(Node):
             self.lidar_callback,
             10
         )
-        self.br = CvBridge()
-        self.publisher_ = self.create_publisher(LidarData, LIDAR_OUTPUT_TOPIC, 10) # TODO: napisac custom type
+        self.publisher_ = self.create_publisher(LidarData, LIDAR_DATA_TOPIC, 10)
 
     def lidar_callback(self, msg):
         rgb = []
@@ -33,17 +26,17 @@ class LidarReaderNode(Node):
         int_data = list(gen)
 
         for x in int_data:
-            test = x[3]
-            s = struct.pack('>f', test)
-            i = struct.unpack('>l', s)[0]
-            pack = ctypes.c_uint32(i).value
+            # test = x[3]
+            # s = struct.pack('>f', test)
+            # i = struct.unpack('>l', s)[0]
+            # pack = ctypes.c_uint32(i).value
 
-            r = (pack & 0x00FF0000)>>16
-            g = (pack & 0x0000FF00)>>8
-            b = (pack & 0x000000FF)
+            # r = (pack & 0x00FF0000)>>16
+            # g = (pack & 0x0000FF00)>>8
+            # b = (pack & 0x000000FF)
 
             xyz.append([x[0], x[1], x[2]])
-            rgb.append([r, g, b])
+            # rgb.append([r, g, b])
 
         self.publish_data(np.array(xyz), np.array(rgb))
 
@@ -84,10 +77,11 @@ class LidarReaderNode(Node):
         # msg.rgb_points = self.convert_to_RgbPoint(rgb)
 
         msg.points = self.convert_to_type(xyz, XyzPoint, "p")
-        msg.rgb_points = self.convert_to_type(rgb, RgbPoint, "p", True)
+        # msg.rgb_points = self.convert_to_type(rgb, RgbPoint, "p", True)
 
         self.publisher_.publish(msg)
-        self.get_logger().info(f"PUBLISHING xyz:{len(xyz)} rgb:{len(rgb)}")
+        # self.get_logger().info(f"PUBLISHING xyz:{len(xyz)} rgb:{len(rgb)}")
+        # self.get_logger().info(f"PUBLISHING xyz:{len(xyz)}")
 
 def main(args=None):
     rclpy.init(args=args)
