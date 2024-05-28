@@ -22,7 +22,7 @@ class ClassifierNode(Node):
 
     def classify_callback(self, msg):
         xyz = convert_to_array(msg.points)
-        self.get_logger().info(f'RECEIVED {xyz.shape}')
+        # self.get_logger().info(f'RECEIVED {xyz.shape}')
 
 
 def main(args=None):
