@@ -5,8 +5,8 @@ from pc_c_interfaces.msg import LidarData
 from pc_c.Utils import convert_to_array
 from pc_c.Constants import LIDAR_DATA_TOPIC, CLASSIFIED_IMAGE_TOPIC
 
+import cv2
 import numpy as np
-
 
 class ClassifierNode(Node):
     def __init__(self):
@@ -17,12 +17,15 @@ class ClassifierNode(Node):
             self.classify_callback,
             10
         )
+        self.window = cv2.namedWindow("Rgb")
 
         self.publisher_ = self.create_publisher(Image, CLASSIFIED_IMAGE_TOPIC, 10)
 
     def classify_callback(self, msg):
         xyz = convert_to_array(msg.points)
-        # self.get_logger().info(f'RECEIVED {xyz.shape}')
+        rgb = convert_to_array(msg.rgb_points,True)
+        self.get_logger().info(f'RECEIVED {xyz.shape} {rgb.shape}')
+        cv2.imshow("Rgb", rgb)
 
 
 def main(args=None):

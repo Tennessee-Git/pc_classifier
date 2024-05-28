@@ -33,7 +33,6 @@ class Display3DNode(Node):
 
     def image_callback(self, msg):
         xyz = convert_to_array(msg.points)
-        # self.get_logger().info(f'RECEIVED {xyz.shape}')
         self.visualize_lidar(xyz)
 
     def visualize_lidar(self, xyz):
