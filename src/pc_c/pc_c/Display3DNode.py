@@ -22,10 +22,18 @@ class Display3DNode(Node):
         vis = o3d.visualization.Visualizer()
         vis.create_window(window_name="Display3D", width=1280, height=720)
         vis.add_geometry(pcd)
+        
         ctr = vis.get_view_control()
+        ctr.camera_local_translate(12,0,-0.5)
+        ctr.set_up([0,0,1])
+        ctr.set_front([-1,0,0])
+        ctr.set_lookat([2,0,0])
+        ctr.set_zoom(2)
+
+
         rop = vis.get_render_option()
         rop.light_on = False
-        rop.point_size = 3.0
+        rop.point_size = 6.0
 
         self.pcd = pcd
         self.vis = vis
@@ -38,10 +46,12 @@ class Display3DNode(Node):
     def visualize_lidar(self, xyz):
         self.pcd.points = o3d.utility.Vector3dVector(xyz)
         self.vis.update_geometry(self.pcd)
+        self.ctr.set_up([0,0,1])
+        self.ctr.set_front([-1,0,0])
+        self.ctr.set_lookat([2,0,0])
+        self.ctr.set_zoom(2)
         self.vis.poll_events()
         self.vis.update_renderer()
-        self.ctr.set_lookat(np.array([4,0,1]))
-        self.ctr.set_zoom(3.5)
 
 def main(args=None):
     rclpy.init(args=args)
