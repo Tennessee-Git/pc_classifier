@@ -1,6 +1,10 @@
 LIDAR_HEIGHT = 16
 LIDAR_WIDTH = 1824
+LIDAR_V_RES = 0.15
+LIDAR_H_RES = 0.2
+LIDAR_V_FOV = (-15.0,15.0)
+LIDAR_Y_EXTRA_SIZE=6
 
 LIDAR_TOPIC = "/velodyne_points"
 LIDAR_DATA_TOPIC = "/lidar/points"
-CLASSIFIED_IMAGE_TOPIC = '/images'
+CLASSIFIED_IMAGE_TOPIC = '/classified_images'

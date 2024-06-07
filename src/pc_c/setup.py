@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'display3d = pc_c.Display3DNode:main',
+            'display2d = pc_c.Display2DNode:main',
             'classifier = pc_c.ClassifierNode:main',
             'lidar = pc_c.LidarReaderNode:main'
         ],
